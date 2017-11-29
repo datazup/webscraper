@@ -6,7 +6,7 @@
 
     <groupId>org.datazup</groupId>
     <artifactId>webscraper</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0</version>
 
     <properties>
         <jsoup.version>1.10.2</jsoup.version>
