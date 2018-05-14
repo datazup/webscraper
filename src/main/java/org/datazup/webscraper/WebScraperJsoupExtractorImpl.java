@@ -1,5 +1,7 @@
 package org.datazup.webscraper;
 
+
+import org.apache.commons.text.StringEscapeUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Attribute;
 import org.jsoup.nodes.Attributes;
@@ -216,7 +218,8 @@ public class WebScraperJsoupExtractorImpl implements IWebScraperExtractor {
 
         for (Attribute attribute: attributes){
             Map<String,Object> map = new HashMap<>();
-            map.put(attribute.getKey(), attribute.getValue());
+            String value = StringEscapeUtils.escapeJava(attribute.getValue());
+            map.put(attribute.getKey(), value);
             list.add(map);
         }
 

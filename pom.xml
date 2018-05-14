@@ -12,6 +12,7 @@
         <jsoup.version>1.10.2</jsoup.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <jackson.version>2.8.8</jackson.version>
+        <commons.text>1.3</commons.text>
     </properties>
     <dependencies>
         <dependency>
@@ -27,6 +28,11 @@
             <scope>provided</scope>
         </dependency>
 
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-text</artifactId>
+            <version>${commons.text}</version>
+        </dependency>
 
         <dependency>
             <groupId>junit</groupId>
