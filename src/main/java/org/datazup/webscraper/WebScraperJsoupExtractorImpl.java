@@ -1,6 +1,8 @@
 package org.datazup.webscraper;
 
 import org.jsoup.Jsoup;
+import org.jsoup.nodes.Attribute;
+import org.jsoup.nodes.Attributes;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
@@ -119,7 +121,7 @@ public class WebScraperJsoupExtractorImpl implements IWebScraperExtractor {
             attribute = (String) selector.get("attr");
         }
         if (null != attribute) {
-            String val = resolveAttribute(attribute, propElements);// elements.attr(attribute);
+            Object val = resolveAttribute(attribute, propElements);// elements.attr(attribute);
             map.put(key, val);
         }
 
@@ -145,8 +147,8 @@ public class WebScraperJsoupExtractorImpl implements IWebScraperExtractor {
         return map;
     }
 
-    private String resolveAttribute(String attribute, Elements elements) {
-        String value = null;
+    private Object resolveAttribute(String attribute, Elements elements) {
+        Object value = null;
 
         String attributeDefaultValue = null;
         if (attribute.contains("||")) {
@@ -156,7 +158,7 @@ public class WebScraperJsoupExtractorImpl implements IWebScraperExtractor {
         }
 
 
-            switch (attribute) {
+        switch (attribute) {
             case "text":
                 value = elements.text();
                 break;
@@ -172,6 +174,9 @@ public class WebScraperJsoupExtractorImpl implements IWebScraperExtractor {
             case "outerHtml":
                 value = elements.outerHtml();
                 break;
+            case "*":
+                value = getAttributeMapList(elements);
+                break;
             default:
                 // get by named attribute
                 //if (elements.hasAttr(attribute)) {
@@ -184,11 +189,38 @@ public class WebScraperJsoupExtractorImpl implements IWebScraperExtractor {
                 break;
         }
 
-        if((null==value || value.isEmpty()) && (null!=attributeDefaultValue && !attributeDefaultValue.isEmpty())){
-            value =attributeDefaultValue;
+        if ((null == value) && (null != attributeDefaultValue && !attributeDefaultValue.isEmpty())) {
+            value = attributeDefaultValue;
         }
 
         return value;
+    }
+
+    private Object getAttributeMapList(Elements elements) {
+        List<Map<String,Object>> list = new ArrayList<>();
+
+        if (null==elements)
+            return list;
+
+        Attributes attributes = null;
+        if (elements.size()==1){
+            attributes = elements.get(0).attributes();
+        }else{
+            for (Element element: elements){
+                attributes.addAll(element.attributes());
+            }
+        }
+
+        if (null==attributes)
+            return list;
+
+        for (Attribute attribute: attributes){
+            Map<String,Object> map = new HashMap<>();
+            map.put(attribute.getKey(), attribute.getValue());
+            list.add(map);
+        }
+
+        return list;
     }
 
     private Map<String, Object> handleObjectProperties(List<Map<String, Object>> properties, Elements propElements) {
@@ -213,7 +245,7 @@ public class WebScraperJsoupExtractorImpl implements IWebScraperExtractor {
         }
         Elements elements = inputData.select(css);
 
-        String value = resolveAttribute(attribute, elements);
+        Object value = resolveAttribute(attribute, elements);
 
         res.put(key, value);
 
@@ -257,10 +289,10 @@ public class WebScraperJsoupExtractorImpl implements IWebScraperExtractor {
         String css = (String) keyMap.get("css");
         String itemType = (String) keyMap.get("type");
         Elements keyElems = els.select(css);
-        String attribute = (String)keyMap.get("attr");
+        String attribute = (String) keyMap.get("attr");
         switch (itemType) {
             case "item":
-                String value = resolveAttribute(attribute, keyElems);
+                Object value = resolveAttribute(attribute, keyElems);
                 map.put("value", value);
                 break;
             default:

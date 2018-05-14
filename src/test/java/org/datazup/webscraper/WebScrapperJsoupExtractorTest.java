@@ -91,7 +91,7 @@ public class WebScrapperJsoupExtractorTest {
         return m;
     }
 
-    @Test
+   /* @Test
     public void mainContainerExtractionTest() throws IOException {
         String path = "autopazar_def.json";
         String url = "http://autopazar.ba/community/search/?tag=reno+megane";
@@ -102,9 +102,9 @@ public class WebScrapperJsoupExtractorTest {
         String jsonM = getJsonFromObject(m);
 
         System.out.println(jsonM);
-    }
+    }*/
 
-    @Test
+   /* @Test
     public void singlePageExtractionTest() throws IOException {
         String url = "http://autopazar.ba/vozila/29983/reno-15dci-svi-tipovi-pumpa-delphi-170e-garancija";
         String path = "autopazar_single_def.json";
@@ -127,7 +127,7 @@ public class WebScrapperJsoupExtractorTest {
         String jsonM = getJsonFromObject(m);
 
         System.out.println(jsonM);
-    }
+    }*/
 
     @Test
     public void multipleContainerSelectoreTest() throws IOException {
