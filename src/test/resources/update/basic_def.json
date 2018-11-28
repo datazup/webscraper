@@ -1,0 +1,21 @@
+{
+  "selectors":[
+    {
+      "css":"head title",
+      "value":"Custom Title",
+      "type":"item"
+    },
+    {
+      "css":".lh-header-container .lh-product-info img",
+      "attr":"src",
+      "value":"sxxxx",
+      "type":"attribute"
+    },
+    {
+      "css":".lh-header-container .lh-product-info img",
+      "attr":"class",
+      "value":"+classToAdd -classToRemove",
+      "type":"class"
+    }
+  ]
+}
