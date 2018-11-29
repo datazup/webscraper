@@ -68,6 +68,14 @@ public class WebScraperJsoupExtractorImpl implements IWebScraperExtractor {
                             Map<String, Object> resMap = handleItem(selector, elem);
                             result.putAll(resMap);
                         }
+                    } else if (parentType.equalsIgnoreCase("selectors")){
+                        Element first = elements.first();
+                        Map tmp = handleItem(selector,first);
+                        if (null!=tmp){
+                            result.putAll(tmp);
+                        }else{
+                            result.put(key, null);
+                        }
                     } else {
                         Object o = null;
                         List l = new ArrayList();

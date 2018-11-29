@@ -3,8 +3,8 @@ package org.datazup.webscraper;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -55,40 +55,40 @@ public class WebScraperJsoupUpdaterImpl implements IWebScraperUpdater {
                 el.text(tmpText);
                 break;
             case "html":
-                doc.select(css).first().html(value);
+                doc.select(css).html(value);
                 break;
             case "htmlAppend":
-                doc.select(css).first().append(value);
+                doc.select(css).append(value);
                 break;
             case "htmlPrepend":
-                doc.select(css).first().prepend(value);
+                doc.select(css).prepend(value);
                 break;
             case "htmlWrap":
-                doc.select(css).first().wrap(value);
+                doc.select(css).wrap(value);
             case "attr":
                 if (null!=value && !value.isEmpty()){
                     if (value.startsWith("+")){
-                        doc.select(css).first().attr(attr, value.substring(1));
+                        doc.select(css).attr(attr, value.substring(1));
                     }else if (value.startsWith("-")){
-                        Element tmpEl = doc.select(css).first();
+                        Elements tmpEl = doc.select(css);
                         String tmpAttr = tmpEl.attr(attr);
                         tmpAttr =tmpAttr.replaceAll(value.substring(1), "");
                         tmpEl.attr(attr, tmpAttr);
                     }else{
-                        doc.select(css).first().attr(attr, value);
+                        doc.select(css).attr(attr, value);
                     }
                 }else {
-                    doc.select(css).first().attr(attr, "");
+                    doc.select(css).attr(attr, "");
                 }
                 break;
             case "class":
                 if (null!=value && !value.isEmpty()) {
                     if (value.startsWith("+")) {
-                        doc.select(css).first().addClass(value.substring(1));
+                        doc.select(css).addClass(value.substring(1));
                     }else if (value.startsWith("-")){
-                        doc.select(css).first().removeClass(value.substring(1));
+                        doc.select(css).removeClass(value.substring(1));
                     }else{
-                        doc.select(css).first().attr("class", value);
+                        doc.select(css).attr("class", value);
                     }
                 }else{
                     doc.select(css).attr(attr, "");

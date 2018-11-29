@@ -1,0 +1,28 @@
+{
+  "selectors": [
+    {
+      "key":"title",
+      "type":"item",
+      "css":"head title",
+      "attr": "text"
+    },
+    {
+      "key":"domainName",
+      "type":"item",
+      "css":"div h1",
+      "attr": "text"
+    },
+    {
+      "key":"linkHref",
+      "type":"item",
+      "css":"div p a",
+      "attr":"href"
+    },
+    {
+      "key":"linkMore",
+      "type":"item",
+      "css":"div p a",
+      "attr": "text"
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "selectors":[
+    {
+      "css":"head title",
+      "value":"Custom Title",
+      "type":"text"
+    },
+    {
+      "css":"div h1",
+      "value":"Custom Domain",
+      "type":"text"
+    },
+    {
+      "css":"div a",
+      "attr":"href",
+      "value":"http://datazup.com",
+      "type":"attr"
+    },
+    {
+      "css":"div a",
+      "value":"Datazup More",
+      "type":"text"
+    }
+  ]
+}
