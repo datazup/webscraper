@@ -5,8 +5,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class WebScraperJsoupUpdaterImpl implements IWebScraperUpdater {
 
@@ -20,14 +19,23 @@ public class WebScraperJsoupUpdaterImpl implements IWebScraperUpdater {
     public String run(String inputData) {
         Document doc = Jsoup.parse(inputData);
 
-        if (null != definition && definition.containsKey("selectors")) {
-            List<Map<String, Object>> selectorList = (List<Map<String, Object>>) definition.get("selectors");
-            if (null != selectorList) {
-                for (Map<String, Object> selector : selectorList) {
-                    process(doc, selector);
+        if (null != definition) {
+
+            if (definition.containsKey("baseUri")) {
+                doc.setBaseUri((String) definition.get("baseUri"));
+            }
+
+            if (definition.containsKey("selectors")) {
+                List<Map<String, Object>> selectorList = (List<Map<String, Object>>) definition.get("selectors");
+                if (null != selectorList) {
+                    for (Map<String, Object> selector : selectorList) {
+                        process(doc, selector);
+                    }
                 }
             }
         }
+
+
         return doc.outerHtml();
     }
 
@@ -35,8 +43,8 @@ public class WebScraperJsoupUpdaterImpl implements IWebScraperUpdater {
 
         String type = (String) selector.get("type");
         String css = (String) selector.get("css");
-        String value = (String)selector.get("value");
-        String attr = (String)selector.get("attr");
+        String value = (String) selector.get("value");
+        String attr = (String) selector.get("attr");
 
         switch (type) {
             case "text":
@@ -65,37 +73,50 @@ public class WebScraperJsoupUpdaterImpl implements IWebScraperUpdater {
                 break;
             case "htmlWrap":
                 doc.select(css).wrap(value);
+                break;
             case "attr":
-                if (null!=value && !value.isEmpty()){
-                    if (value.startsWith("+")){
+                if (null != value && !value.isEmpty()) {
+                    if (value.startsWith("+")) {
                         doc.select(css).attr(attr, value.substring(1));
-                    }else if (value.startsWith("-")){
+                    } else if (value.startsWith("-")) {
                         Elements tmpEl = doc.select(css);
                         String tmpAttr = tmpEl.attr(attr);
-                        tmpAttr =tmpAttr.replaceAll(value.substring(1), "");
+                        tmpAttr = tmpAttr.replaceAll(value.substring(1), "");
                         tmpEl.attr(attr, tmpAttr);
-                    }else{
+                    } else {
                         doc.select(css).attr(attr, value);
                     }
-                }else {
+                } else {
                     doc.select(css).attr(attr, "");
                 }
                 break;
             case "class":
-                if (null!=value && !value.isEmpty()) {
+                if (null != value && !value.isEmpty()) {
                     if (value.startsWith("+")) {
                         doc.select(css).addClass(value.substring(1));
-                    }else if (value.startsWith("-")){
+                    } else if (value.startsWith("-")) {
                         doc.select(css).removeClass(value.substring(1));
-                    }else{
+                    } else {
                         doc.select(css).attr("class", value);
                     }
-                }else{
+                } else {
                     doc.select(css).attr(attr, "");
                 }
                 break;
             case "removeElement":
                 doc.select(css).remove();
+                break;
+            case "updateToAbs":
+                Elements elements = doc.select(css);
+                Set<String> attrSet = new HashSet<>(Arrays.asList(attr.split(",")));
+                for (Element element : elements) {
+                    for (String a : attrSet) {
+                        if (element.hasAttr(a)) {
+                            String origVal = element.attr("abs:" + a);
+                            element.attr(a, origVal);
+                        }
+                    }
+                }
                 break;
         }
     }
