@@ -1,22 +1,9 @@
 package org.datazup.webscraper;
 
-import com.fasterxml.jackson.core.JsonGenerationException;
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.JsonMappingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.junit.Assert;
 import org.junit.Test;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 
 public class WebScrapperJsoupExtractorTest extends BaseTest {
