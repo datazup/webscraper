@@ -1,6 +1,7 @@
 package org.datazup.webscraper;
 
 
+import org.apache.commons.lang3.NotImplementedException;
 import org.apache.commons.text.StringEscapeUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Attribute;
@@ -8,7 +9,7 @@ import org.jsoup.nodes.Attributes;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -96,7 +97,7 @@ public class WebScraperJsoupExtractorImpl implements IWebScraperExtractor {
                 result.putAll(resMap);
                 break;
             default:
-                throw new NotImplementedException();
+                throw new NotImplementedException("Not implemented");
         }
 
 
