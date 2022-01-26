@@ -9,7 +9,7 @@ import java.util.*;
 
 public class WebScraperJsoupUpdaterImpl implements IWebScraperUpdater {
 
-    private Map<String, Object> definition;
+    private final Map<String, Object> definition;
 
     public WebScraperJsoupUpdaterImpl(Map<String, Object> definition) {
         this.definition = definition;

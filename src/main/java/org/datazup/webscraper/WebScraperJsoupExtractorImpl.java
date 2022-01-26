@@ -18,7 +18,7 @@ import java.util.Map;
 
 public class WebScraperJsoupExtractorImpl implements IWebScraperExtractor {
 
-    private Map<String, Object> definition;
+    private final Map<String, Object> definition;
 
     public WebScraperJsoupExtractorImpl(Map<String, Object> definition) {
         this.definition = definition;
